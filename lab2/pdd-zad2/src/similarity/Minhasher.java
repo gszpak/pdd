@@ -15,7 +15,7 @@ import java.util.TreeSet;
 public class Minhasher {
 
 	@SuppressWarnings("unchecked")
-	private static Set<Integer> getColumn(String shingledDocument) throws IOException, ClassNotFoundException {
+	private static Set<Integer> readColumn(String shingledDocument) throws IOException, ClassNotFoundException {
 		ObjectInputStream inputStream = null;
 		try {
 			inputStream = new ObjectInputStream(new FileInputStream(shingledDocument));
@@ -27,10 +27,10 @@ public class Minhasher {
 		}
 	}
 
-	private static List<Set<Integer>> getAllColumns(String[] shingledDocuments) throws ClassNotFoundException, IOException {
+	private static List<Set<Integer>> readAllColumns(String[] shingledDocuments) throws ClassNotFoundException, IOException {
 		List<Set<Integer>> columns = new ArrayList<Set<Integer>>();
 		for (String shingledDocument: shingledDocuments) {
-			columns.add(Minhasher.getColumn(shingledDocument));
+			columns.add(Minhasher.readColumn(shingledDocument));
 		}
 		return columns;
 	}
@@ -83,13 +83,13 @@ public class Minhasher {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if ((args.length % 2) != 0) {
-			System.err.println("Usage: java Minhasher <num_of_signature_elems> <output> <shingled1> <shingled2> ...");
+			System.err.println("Usage: java similarity.Minhasher <num_of_signature_elems> <output> <shingled1> <shingled2> ...");
 			return;
 		}
 		int numOfSignatureElems = Integer.parseInt(args[0]);
 		String outputFileName = args[1];
 
-		List<Set<Integer>> columns = Minhasher.getAllColumns(Arrays.copyOfRange(args, 2, args.length));
+		List<Set<Integer>> columns = Minhasher.readAllColumns(Arrays.copyOfRange(args, 2, args.length));
 		List<Integer> rows = Minhasher.getAllRows(columns);
 		RandomHashGenerator[] hashFunctions = Minhasher.getHashFunctions(numOfSignatureElems, rows.size());
 		int[][] signatures = Minhasher.initSignatures(numOfSignatureElems, columns.size());

@@ -44,7 +44,7 @@ public class Shingler {
 
 	public static void main(String args[]) throws IOException {
 		if ((args.length % 2) != 1) {
-			System.err.println("Usage: java Shinger <k> <input1> <output1> <input2> <output2> ... ");
+			System.err.println("Usage: java similarity.Shinger <k> <input1> <output1> <input2> <output2> ... ");
 			return;
 		}
 		int k = Integer.parseInt(args[0]);
