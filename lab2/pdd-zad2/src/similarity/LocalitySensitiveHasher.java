@@ -52,7 +52,7 @@ public class LocalitySensitiveHasher {
 		for (int actBand = 0; actBand < signatures.length; actBand += rowsInBand) {
 			Map<Integer, List<Integer>> buckets = new HashMap<Integer, List<Integer>>();
 			for (int column = 0; column < numOfColumns; ++column) {
-				Integer vectorHash = Integer.valueOf(LocalitySensitiveHasher.getHashForVector(signatures, rowsInBand, actBand, column));
+				Integer vectorHash = LocalitySensitiveHasher.getHashForVector(signatures, rowsInBand, actBand, column);
 				List<Integer> bucket = buckets.get(vectorHash);
 				if (bucket == null) {
 					bucket = new LinkedList<Integer>();

@@ -5,35 +5,46 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 
 public class Shingler {
 
-	private static String getFirstShingle(BufferedReader reader, int k) throws IOException {
-		char[] shingle = new char[k];
+	private static LinkedList<Character> getFirstShingle(BufferedReader reader, int k) throws IOException {
+		LinkedList<Character> shingle = new LinkedList<Character>();
 		for (int i = 0; i < k; ++i) {
 			int actChar = reader.read();
 			if (actChar == -1) {
 				break;
 			}
-			shingle[i] = (char) actChar;
+			shingle.add((char) actChar);
 		}
-		return new String(shingle);
+		return shingle;
+	}
+
+	private static Set<Integer> getHashedShingles(int k, LinkedList<Character> firstShingle, BufferedReader reader) throws IOException {
+		Set<Integer> hashedShingles = new HashSet<Integer>();
+		LinkedList<Character> actShingle = firstShingle;
+		hashedShingles.add(actShingle.hashCode());
+		int actChar;
+		while ((actChar = reader.read()) != -1) {
+			actShingle.removeFirst();
+			actShingle.addLast((char) actChar);
+			hashedShingles.add(actShingle.hashCode());
+		}
+		return hashedShingles;
 	}
 
 	public static void shingle(int k, String inputFileName, String outputFileName) throws IOException {
-		Set<Integer> hashedShingles = new HashSet<Integer>();
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(inputFileName));
-			String actShingle = Shingler.getFirstShingle(reader, k);
-			hashedShingles.add(actShingle.hashCode());
-			int actChar;
-			while ((actChar = reader.read()) != -1) {
-				actShingle = new StringBuilder(actShingle.substring(1)).append((char) actChar).toString();
-				hashedShingles.add(actShingle.hashCode());
+			LinkedList<Character> firstShingle = Shingler.getFirstShingle(reader, k);
+			if (firstShingle.size() < k) {
+				return;
 			}
+			Set<Integer> hashedShingles = Shingler.getHashedShingles(k, firstShingle, reader);
 			ObjectToFileExporter.exportObjectToFile(hashedShingles, outputFileName);
 		} finally {
 			if (reader != null) {
