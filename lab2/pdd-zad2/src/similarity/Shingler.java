@@ -23,8 +23,12 @@ public class Shingler {
 		return shingle;
 	}
 
-	private static Set<Integer> getHashedShingles(int k, LinkedList<Character> firstShingle, BufferedReader reader) throws IOException {
+	private static Set<Integer> getHashedShingles(int k, LinkedList<Character> firstShingle,
+			BufferedReader reader) throws IOException {
 		Set<Integer> hashedShingles = new HashSet<Integer>();
+		if (firstShingle.size() < k) {
+			return hashedShingles;
+		}
 		LinkedList<Character> actShingle = firstShingle;
 		hashedShingles.add(actShingle.hashCode());
 		int actChar;
@@ -41,9 +45,6 @@ public class Shingler {
 		try {
 			reader = new BufferedReader(new FileReader(inputFileName));
 			LinkedList<Character> firstShingle = Shingler.getFirstShingle(reader, k);
-			if (firstShingle.size() < k) {
-				return;
-			}
 			Set<Integer> hashedShingles = Shingler.getHashedShingles(k, firstShingle, reader);
 			ObjectToFileExporter.exportObjectToFile(hashedShingles, outputFileName);
 		} finally {
@@ -54,9 +55,8 @@ public class Shingler {
 	}
 
 	public static void main(String args[]) throws IOException {
-		if ((args.length % 2) != 1) {
-			System.err.println("Usage: java similarity.Shinger <k> <input1> <output1> <input2> <output2> ... ");
-			return;
+		if (((args.length % 2) != 1) || (args.length < 2)) {
+			throw new IllegalArgumentException("Usage: java similarity.Shinger <k> <input1> <output1> <input2> <output2> ... ");
 		}
 		int k = Integer.parseInt(args[0]);
 		for (int i = 1; i < args.length; i += 2) {

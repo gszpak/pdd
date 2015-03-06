@@ -82,9 +82,9 @@ public class Minhasher {
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		if ((args.length % 2) != 0) {
-			System.err.println("Usage: java similarity.Minhasher <num_of_signature_elems> <output> <shingled1> <shingled2> ...");
-			return;
+		if (((args.length % 2) != 0) || (args.length < 3)) {
+			throw new IllegalArgumentException("Usage: java similarity.Minhasher <num_of_signature_elems> <output> "
+					+ "<shingled1> <shingled2> ...");
 		}
 		int numOfSignatureElems = Integer.parseInt(args[0]);
 		String outputFileName = args[1];
@@ -94,13 +94,6 @@ public class Minhasher {
 		RandomHashGenerator[] hashFunctions = Minhasher.getHashFunctions(numOfSignatureElems, rows.size());
 		int[][] signatures = Minhasher.initSignatures(numOfSignatureElems, columns.size());
 		Minhasher.calculateSignatures(columns, rows, signatures, hashFunctions);
-		// TODO: delete
-		for (int i = 0; i < signatures.length; ++i) {
-			for (int j = 0; j < signatures[i].length; ++j) {
-				System.out.print(signatures[i][j] + " ");
-			}
-			System.out.println();
-		}
 		ObjectToFileExporter.exportObjectToFile(signatures, outputFileName);
 	}
 

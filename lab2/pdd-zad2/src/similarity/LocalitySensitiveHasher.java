@@ -31,8 +31,8 @@ public class LocalitySensitiveHasher {
 
 	private static int getHashForVector(int[][] signatures, int rowsInBand, int actBand, int columnNum) {
 		List<Integer> vector = new LinkedList<Integer>();
-		for (int i = actBand; i < rowsInBand; ++i) {
-			vector.add(signatures[i][columnNum]);
+		for (int i = 0; i < rowsInBand; ++i) {
+			vector.add(signatures[actBand + i][columnNum]);
 		}
 		return vector.hashCode();
 	}
@@ -48,7 +48,7 @@ public class LocalitySensitiveHasher {
 	private static void printSimilar(int[][] signatures, int numOfBands, int numOfColumns) {
 		assert signatures.length % numOfBands == 0;
 		int rowsInBand = signatures.length / numOfBands;
-		System.out.println("Similar documents:");
+		System.out.println("Groups of similar documents:");
 		for (int actBand = 0; actBand < signatures.length; actBand += rowsInBand) {
 			Map<Integer, List<Integer>> buckets = new HashMap<Integer, List<Integer>>();
 			for (int column = 0; column < numOfColumns; ++column) {
@@ -65,11 +65,9 @@ public class LocalitySensitiveHasher {
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		if (args.length != 2) {
-			System.err.println("Usage: java similarity.LocalitySensitiveHasher <b> <file_with_signatures> <num_of_rows> <num_of_columns>");
-			return;
+		if (args.length != 4) {
+			throw new IllegalArgumentException("Usage: java similarity.LocalitySensitiveHasher <b> <file_with_signatures> <num_of_rows> <num_of_columns>");
 		}
-
 		int numOfBands = Integer.parseInt(args[0]);
 		String fileName = args[1];
 		int numOfRows = Integer.parseInt(args[2]);
@@ -77,7 +75,6 @@ public class LocalitySensitiveHasher {
 		int[][] signatures = LocalitySensitiveHasher.readSignatures(fileName, numOfRows, numOfColumns);
 		assert signatures.length % numOfBands == 0;
 		LocalitySensitiveHasher.printSimilar(signatures, numOfBands, numOfColumns);
-
 	}
 
 }
