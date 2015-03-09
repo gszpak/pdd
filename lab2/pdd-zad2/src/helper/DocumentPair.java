@@ -1,4 +1,4 @@
-package similarity;
+package helper;
 
 public class DocumentPair implements Comparable<DocumentPair> {
 
