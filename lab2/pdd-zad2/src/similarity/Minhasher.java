@@ -54,7 +54,7 @@ public class Minhasher {
 		return minPermutedNumber;
 	}
 
-	private static int[][] calculateSignatures(List<Set<Integer>> columns,
+	public static int[][] calculateSignatures(List<Set<Integer>> columns,
 			int numOfSignatureElements, int numOfRows) {
 		int numOfColumns = columns.size();
 		int[][] signatures = new int[numOfSignatureElements][numOfColumns];

@@ -49,7 +49,7 @@ public class SimilarDocumentsFinder {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if (args.length < 5) {
-			System.err.println("Usage: java similarity.SimilarDocumentsFinder <k> "
+			throw new IllegalArgumentException("Usage: java similarity.SimilarDocumentsFinder <k> "
 					+ "<num_of_signature_elems> <num_of_bands> <file1> <file2> ...");
 		}
 		String k = args[0];
