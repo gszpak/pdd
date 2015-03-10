@@ -5,6 +5,7 @@ import helper.DocumentPair;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -82,6 +83,26 @@ public class LocalitySensitiveHasher {
 		}
 	}
 
+	private static void printSimilarityOfCandidates(Set<DocumentPair> candidates,
+			int[][] signaturesTranspose) {
+		NumberFormat percentFormat = NumberFormat.getPercentInstance();
+		percentFormat.setMaximumFractionDigits(1);
+		System.out.println("Similarity percentage");
+		for (DocumentPair documentPair: candidates) {
+			int doc1 = documentPair.getFirstDocumentNumber();
+			int doc2 = documentPair.getSecondDocumentNumber();
+			int numOfEqual = 0;
+			int numOfAll = signaturesTranspose[doc1].length;
+			for (int i = 0; i < numOfAll; ++i) {
+				if (signaturesTranspose[doc1][i] == signaturesTranspose[doc2][i]) {
+					numOfEqual += 1;
+				}
+			}
+			float similiarity = ((float) numOfEqual) / ((float) numOfAll);
+			System.out.println("For pair " + documentPair.toString() + ": " + percentFormat.format(similiarity));
+		}
+	}
+
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		if (args.length != 4) {
 			throw new IllegalArgumentException("Usage: java similarity.LocalitySensitiveHasher <b> <file_with_signatures> <num_of_rows> <num_of_columns>");
@@ -94,15 +115,11 @@ public class LocalitySensitiveHasher {
 		int rowsInBand = numOfRows / numOfBands;
 		// Signature matrix is transposed (signatures are held in rows)
 		int[][] signaturesTranspose = readSignatures(fileName, numOfRows, numOfColumns);
-		// TODO: delete
-		for (int i = 0; i < signaturesTranspose.length; ++i) {
-			for (int j = 0; j < signaturesTranspose[i].length; ++j) {
-				System.out.print(signaturesTranspose[i][j]);
-			}
-			System.out.println();
-		}
 		Set<DocumentPair> similarCandidates = getSimilarCandidates(signaturesTranspose, numOfColumns, numOfRows, rowsInBand);
 		printCandidates(similarCandidates);
+		if (similarCandidates.size() > 0) {
+			printSimilarityOfCandidates(similarCandidates, signaturesTranspose);
+		}
 	}
 
 }

@@ -71,7 +71,7 @@ public class Minhasher {
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		if (((args.length % 2) != 0) || (args.length < 3)) {
+		if (args.length < 3) {
 			throw new IllegalArgumentException("Usage: java similarity.Minhasher <num_of_signature_elems> <output> "
 					+ "<shingled1> <shingled2> ...");
 		}
