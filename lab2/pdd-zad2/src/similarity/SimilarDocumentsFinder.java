@@ -12,7 +12,9 @@ public class SimilarDocumentsFinder {
 	private static String[] prepareFilesWithShingles(String[] filesNames) {
 		String[] shingledFilesNames = Arrays.copyOf(filesNames, filesNames.length);
 		for (int i = 0; i < shingledFilesNames.length; ++i) {
-			shingledFilesNames[i] = TEMP_DIR + File.separator + shingledFilesNames[i] + shingledFilesNames[i].hashCode();
+			File shingledFile = new File(shingledFilesNames[i]);
+			String fileName = shingledFile.getName();
+			shingledFilesNames[i] = TEMP_DIR + File.separator + fileName + fileName.hashCode();
 		}
 		return shingledFilesNames;
 	}
