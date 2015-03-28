@@ -1,0 +1,15 @@
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/reducer/GroupReducer.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/mapper/ProjectionMapper.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/reducer/ProjectionReducer.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/runner/JobsRunner.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/helper/VisibleTupleWritable.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/reducer/SelectionReducer.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/mapper/DifferenceMapper.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/reducer/DifferenceReducer.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/mapper/GroupMapper.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/reducer/JoinReducer.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/mapper/JoinMapper.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/mapper/TupleToPairConverterMapper.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/reducer/UnionReducer.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/reducer/IntersectionReducer.java
+/home/szpaq/eclipse/workspace-java/MRRelationalAlgebra/src/main/java/helper/CSVLineConverterMixin.java
