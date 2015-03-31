@@ -1,0 +1,6 @@
+bot,fbi,0
+alice,lakers,3
+bot,nsa,1
+bob,iPod,1
+bot,cia,5
+

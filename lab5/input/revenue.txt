@@ -1,0 +1,6 @@
+lakers,top,50
+lakers,side,20
+kings,top,30
+chelsea,top,50
+chelsea,bottom,30
+kings,side,10

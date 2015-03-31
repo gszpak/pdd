@@ -1,0 +1,7 @@
+lakers,nba.com,1
+lakers,espn.com,2
+kings,nhl.com,1
+kings,nba.com,3
+chelsea,chelseafc.com,1
+chelsea,chelsealive.pl,2
+chelsea,www.bbc.com/sport/football/teams/chelsea,7
