@@ -11,4 +11,10 @@ STORE average_group INTO 'example1_out';
 
 all_groups = GROUP urls by category;
 top3 = FOREACH all_groups GENERATE group, myfuncs.top3(urls);
-STORE top3 into 'udf_out';
+STORE top3 into 'example2_out';
+
+
+map_result = FOREACH urls GENERATE FLATTEN(myfuncs.map_(*));
+key_groups = GROUP map_result BY $0;
+map_red = FOREACH key_groups GENERATE myfuncs.reduce(*);
+STORE map_red into 'mapred_out';
