@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class UniversalHashFunction {
 
-	private static final int PRIME_BIT_LENGTH = 10;
+	private static final int PRIME_BIT_LENGTH = 12;
 
 	private static final Random RAND = new Random();
 	private static final int PRIME1 = BigInteger.probablePrime(PRIME_BIT_LENGTH, RAND).intValue();

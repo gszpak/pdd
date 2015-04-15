@@ -1,8 +1,7 @@
-reducer/TrianglesReducer$Graph.class
-reducer/TrianglesReducer$Graph$Edge.class
+mapper/TrianglesMapper$Node.class
 mapper/TrianglesMapper.class
-reducer/TrianglesReducer$1.class
 helper/UniversalHashFunction.class
 helper/CSVLineConverterMixin.class
 com/gszpak/App.class
 reducer/TrianglesReducer.class
+helper/Position.class
