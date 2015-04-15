@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
@@ -18,23 +19,23 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class TrianglesReducer extends Reducer<Text, Text, NullWritable, Text>
 		implements CSVLineConverterMixin {
 
-	private HashMap<Position, HashMap<String, HashSet<String>>> getRelationReprs() {
-		HashMap<Position, HashMap<String, HashSet<String>>> relationReprs =
-				new HashMap<Position, HashMap<String,HashSet<String>>>();
+	private Map<Position, Map<String, Set<String>>> getRelationReprs() {
+		Map<Position, Map<String, Set<String>>> relationReprs =
+				new HashMap<Position, Map<String, Set<String>>>();
 		for (Position p: Position.values()) {
-			relationReprs.put(p, new HashMap<String, HashSet<String>>());
+			relationReprs.put(p, new HashMap<String, Set<String>>());
 		}
 		return relationReprs;
 	}
 
-	private void findTriangles(HashMap<String, HashSet<String>> left,
-			HashMap<String, HashSet<String>> middle,
-			HashMap<String, HashSet<String>> right,
+	private void findTriangles(Map<String, Set<String>> left,
+			Map<String, Set<String>> middle,
+			Map<String, Set<String>> right,
 			Context context) throws IOException, InterruptedException {
-		for (Map.Entry<String, HashSet<String>> leftEntry: left.entrySet()) {
+		for (Map.Entry<String, Set<String>> leftEntry: left.entrySet()) {
 			String x = leftEntry.getKey();
-			HashSet<String> yEdges = leftEntry.getValue();
-			HashSet<String> zEdges = middle.get(x);
+			Set<String> yEdges = leftEntry.getValue();
+			Set<String> zEdges = middle.get(x);
 			if (zEdges == null) {
 				continue;
 			}
@@ -54,14 +55,14 @@ public class TrianglesReducer extends Reducer<Text, Text, NullWritable, Text>
 	@Override
 	public void reduce(Text key, Iterable<Text> values, Context context)
 			throws IOException, InterruptedException {
-		HashMap<Position, HashMap<String, HashSet<String>>> relationReprs = getRelationReprs();
+		Map<Position, Map<String, Set<String>>> relationReprs = getRelationReprs();
 		for (Text edgeText: values) {
 			List<String> edgeRepr = lineToTuple(edgeText.toString());
 			if (edgeRepr.size() != 3) {
 				throw new IllegalArgumentException();
 			}
 			Position p = Position.fromRepr(edgeRepr.get(2));
-			HashMap<String, HashSet<String>> relation = relationReprs.get(p);
+			Map<String, Set<String>> relation = relationReprs.get(p);
 			String node1 = edgeRepr.get(0);
 			String node2 = edgeRepr.get(1);
 			if (!relation.containsKey(node1)) {
